@@ -1,0 +1,11 @@
+﻿<Window x:Class="ClubArm.Views.TopUpWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Пополнение баланса" Height="150" Width="300"
+        WindowStartupLocation="CenterOwner">
+    <StackPanel Margin="10">
+        <TextBlock Text="Сумма:"/>
+        <TextBox x:Name="txtAmount" Margin="0,5"/>
+        <Button Content="Пополнить" Click="TopUp_Click" Width="100" Margin="0,20,0,0" HorizontalAlignment="Center"/>
+    </StackPanel>
+</Window>

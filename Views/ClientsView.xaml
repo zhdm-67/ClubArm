@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="ClubArm.Views.ClientsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="clr-namespace:ClubArm.Converters">
+    <UserControl.Resources>
+        <converters:BalanceToColorConverter x:Key="BalanceToColorConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Панель инструментов -->
+        <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="0">
+            <Button Content="Добавить" Command="{Binding AddCommand}" Margin="2" Width="80"/>
+            <Button Content="Изменить" Command="{Binding EditCommand}" Margin="2" Width="80"/>
+            <Button Content="Удалить" Command="{Binding DeleteCommand}" Margin="2" Width="80"/>
+            <Button Content="Пополнить баланс" Command="{Binding TopUpCommand}" Margin="2" Width="120" Background="LightGoldenrodYellow"/>
+            <Button Content="Запустить сессию" Command="{Binding StartSessionCommand}" Margin="2" Width="120" Background="LightGreen"/>
+            <Button Content="Обновить" Command="{Binding RefreshCommand}" Margin="2" Width="80"/>
+        </StackPanel>
+
+        <!-- Строка поиска -->
+        <Border Grid.Row="1" Margin="5" Padding="3" BorderBrush="LightGray" BorderThickness="1" CornerRadius="4">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Поиск:" VerticalAlignment="Center" Margin="5,0"/>
+                <TextBox x:Name="SearchBox" Width="200" Margin="5,0" 
+                         Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                         ToolTip="Поиск по ФИО и телефону"/>
+                <Button Content="Очистить" Command="{Binding ClearSearchCommand}" Margin="5,0" Width="70"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Список клиентов в виде таблицы -->
+        <ListView Grid.Row="2" ItemsSource="{Binding Clients}" SelectedItem="{Binding SelectedClient}" Margin="5">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ФИО" DisplayMemberBinding="{Binding FullName}" Width="180"/>
+                    <GridViewColumn Header="Телефон" DisplayMemberBinding="{Binding Phone}" Width="120"/>
+                    <GridViewColumn Header="Баланс (BYN)" Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Balance, StringFormat={}{0:F2}}" 
+                                           Foreground="{Binding Balance, Converter={StaticResource BalanceToColorConverter}}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Скидка (%)" DisplayMemberBinding="{Binding Discount, StringFormat={}{0:F0}}" Width="80"/>
+                    <GridViewColumn Header="Дата регистрации" DisplayMemberBinding="{Binding RegistrationDate, StringFormat=dd.MM.yyyy}" Width="100"/>
+                    <GridViewColumn Header="Всего сессий" DisplayMemberBinding="{Binding TotalSessions}" Width="90"/>
+                    <GridViewColumn Header="Суммарные траты (BYN)" DisplayMemberBinding="{Binding TotalSpent, StringFormat={}{0:F2}}" Width="140"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</UserControl>

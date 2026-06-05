@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="ClubArm.Views.ReportsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Margin="5">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="С даты:" VerticalAlignment="Center" Margin="5"/>
+            <DatePicker SelectedDate="{Binding StartDate}" Width="120" Margin="5"/>
+            <TextBlock Text="По дату:" VerticalAlignment="Center" Margin="5"/>
+            <DatePicker SelectedDate="{Binding EndDate}" Width="120" Margin="5"/>
+            <Button Content="Сформировать" Command="{Binding GenerateReportCommand}" Margin="5" Width="100"/>
+        </StackPanel>
+        <GroupBox Header="Выручка" Margin="5">
+            <TextBlock Text="{Binding TotalRevenue, StringFormat=Итого: {0:C}}" FontSize="14" FontWeight="Bold"/>
+        </GroupBox>
+        <GroupBox Header="Загрузка компьютеров" Margin="5">
+            <TextBlock Text="{Binding ComputerLoadReport}" TextWrapping="Wrap"/>
+        </GroupBox>
+        <GroupBox Header="Популярность тарифов" Margin="5">
+            <TextBlock Text="{Binding TariffPopularity}" TextWrapping="Wrap"/>
+        </GroupBox>
+    </StackPanel>
+</UserControl>

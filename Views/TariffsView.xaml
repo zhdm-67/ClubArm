@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="ClubArm.Views.TariffsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Панель инструментов -->
+        <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="0">
+            <Button Content="Добавить" Command="{Binding AddCommand}" Margin="2" Width="80"/>
+            <Button Content="Изменить" Command="{Binding EditCommand}" Margin="2" Width="80"/>
+            <Button Content="Удалить" Command="{Binding DeleteCommand}" Margin="2" Width="80"/>
+            <Button Content="Обновить" Command="{Binding RefreshCommand}" Margin="2" Width="80"/>
+        </StackPanel>
+
+        <!-- Строка поиска -->
+        <Border Grid.Row="1" Margin="5" Padding="3" BorderBrush="LightGray" BorderThickness="1" CornerRadius="4">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Поиск:" VerticalAlignment="Center" Margin="5,0"/>
+                <TextBox x:Name="SearchBox" Width="200" Margin="5,0" 
+                         Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                         ToolTip="Поиск по названию тарифа"/>
+                <Button Content="Очистить" Command="{Binding ClearSearchCommand}" Margin="5,0" Width="70"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Таблица тарифов -->
+        <ListView Grid.Row="2" ItemsSource="{Binding Tariffs}" SelectedItem="{Binding SelectedTariff}" Margin="5">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="50"/>
+                    <GridViewColumn Header="Название" DisplayMemberBinding="{Binding Name}" Width="150"/>
+                    <GridViewColumn Header="Тип" DisplayMemberBinding="{Binding TypeDisplay}" Width="100"/>
+                    <GridViewColumn Header="Цена за минуту (BYN)" DisplayMemberBinding="{Binding PricePerMinute, StringFormat={}{0:F2}}" Width="130"/>
+                    <GridViewColumn Header="Пакет минут" DisplayMemberBinding="{Binding PackageMinutes, TargetNullValue=—}" Width="100"/>
+                    <GridViewColumn Header="Цена пакета (BYN)" DisplayMemberBinding="{Binding PackagePrice, StringFormat={}{0:F2}, TargetNullValue=—}" Width="120"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</UserControl>
